@@ -1,9 +1,8 @@
 import React from "react";
-import NoteList from "./components/NoteList";
-import { getInitialData } from "./utils/data";
-import NoteInput from "./components/NoteInput";
-import NoteSearch from "./components/NoteSearch";
-import NotesFooter from "./components/NotesFooter";
+import NoteList from "./NoteList";
+import { getInitialData } from "../utils/data";
+import NoteInput from "./NoteInput";
+import NoteSearch from "./NoteSearch";
 
 class NoteApp extends React.Component {
   constructor(props) {
@@ -99,35 +98,32 @@ class NoteApp extends React.Component {
 
   render() {
     return (
-      <div className="note-app">
-        <div className="note-app__body">
-          <NoteSearch onSearch={this.handleSearch} />
-          <div className="notes-app">
-            <NoteInput addNote={this.onAddNoteHandler} />
-          </div>
-          <div className="notes-app">
-            <h2>Catatan Aktif</h2>
-            <NoteList
-              notes={this.filterNotes(this.state.search)}
-              search={this.state.search}
-              onDelete={this.onDeleteHandler}
-              onArchive={this.onArchiveHandler}
-            />
-          </div>
-          <div className="notes-app">
-            <h2>Arsip</h2>
-            <NoteList
-              notes={
-                this.state.search.length > 0
-                  ? this.searchArchivedNotes(this.state.search)
-                  : this.state.archivedNotes
-              }
-              onDelete={this.onDeleteHandler}
-              onArchive={this.onUnArchiveHandler}
-            />
-          </div>
+      <div className="note-app__body">
+        <NoteSearch onSearch={this.handleSearch} />
+        <div className="notes-app">
+          <NoteInput addNote={this.onAddNoteHandler} />
         </div>
-        <NotesFooter />
+        <div className="notes-app">
+          <h2>Catatan Aktif</h2>
+          <NoteList
+            notes={this.filterNotes(this.state.search)}
+            search={this.state.search}
+            onDelete={this.onDeleteHandler}
+            onArchive={this.onArchiveHandler}
+          />
+        </div>
+        <div className="notes-app">
+          <h2>Arsip</h2>
+          <NoteList
+            notes={
+              this.state.search.length > 0
+                ? this.searchArchivedNotes(this.state.search)
+                : this.state.archivedNotes
+            }
+            onDelete={this.onDeleteHandler}
+            onArchive={this.onUnArchiveHandler}
+          />
+        </div>
       </div>
     );
   }

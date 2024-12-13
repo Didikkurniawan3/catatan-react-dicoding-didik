@@ -1,13 +1,350 @@
-body {
+* {
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #343A40;
+  color: white;
+}
+
+.note-search {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.note-search input {
+  padding: 8px;
+  font-size: 14px;
+  width: 200px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  background-color: transparent;
+  color: white;
+}
+
+input,
+textarea {
+  padding: 12px;
+  margin: 12px 0;
+  font-family: 'Inter', sans-serif;
+  background-color: transparent;
+  color: white;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #aaa;
+  font-weight: bold;
+}
+
+.note-app__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 16px;
+  border-bottom: 1px solid #aaa;
+}
+
+.note-app__header h1 {
+  margin: 8px 0;
+  flex: 1;
+  color: white;
+  text-align: center;
+}
+
+.note-app__body {
+  max-width: 1000px;
+  margin: 16px auto;
+  padding: 12px;
+}
+
+.note-app__body h2 {
+  font-weight: normal;
+  margin: 16px 0;
+}
+
+.note-input {
+  margin: 0 auto;
+  max-width: 500px;
+  margin-bottom: 48px;
+  margin-top: 78px;
+}
+
+.note-input input,
+.note-input textarea {
+  display: block;
+  width: 100%;
+}
+
+.note-input__title {
+  font-weight: bold;
+  text-align: center;
+  margin: 2px;
+}
+
+.note-input__title__char-limit {
+  font-size: 14px;
+  text-align: right;
+  color: #aaa;
+}
+
+.note-input__body {
+  min-height: 175px;
+}
+
+.note-input button {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  background-color: transparent;
+  font-family: 'Inter', sans-serif;
+  color: white;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.notes-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(min-content, max-content);
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.notes-list__empty-message {
+  text-align: center;
+  color: #aaa;
+}
+
+.note-item {
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+  background-color: #333; /* Warna abu-abu */
+}
+
+.note-item:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.note-item__content {
+  padding: 12px;
+  flex: 1;
+}
+
+.note-item__title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-bottom: 4px;
+  color: white; /* Warna teks */
+}
+
+.note-item__date {
+  font-size: 12px;
+  margin-bottom: 8px;
+  color: #aaa;
+}
+
+.note-item__body {
+  font-size: 14px;
+  color: white; /* Warna teks */
+}
+
+.note-item__action {
+  display: flex;
+}
+
+.note-item__delete-button,
+.note-item__archive-button {
+  display: block;
+  width: 100%;
+  background-color: transparent;
+  border: 0;
+  border-top: 1px solid #aaa;
+  padding: 8px 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+.notes-app {
+  background-color: #333; /* Warna abu-abu tua */
+  padding: 20px;
+  margin: 20px;
+  border: 1px solid #be6c6c; /* Outline */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Card view */
+}
+.note-item__delete-button:hover,
+.note-item__archive-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+
+.note-item__delete-button {
+  border-right: 1px solid #aaa;
+  color: #ff5f52;
+}
+
+.note-item__archive-button {
+  color: #fff263;
+}
+
+.note-item__archive-button:hover {
+  color: #c49000;
+}
+
+.note-item__delete-button:hover {
+  color: #b00020;
+}
+
+@media only screen and (min-width: 500px) {
+  .notes-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  .notes-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .note-search input {
+    min-width: 400px;
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  .notes-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+
+.head_bar {
+  padding: 18px 12px;
+  text-align: center;
+  justify-content: start;
+  background-color: #ea9009;
+  color: #212020;
+}
+
+main {
+  max-width: 500px;
+  width: 80%;
+  margin: 30px auto;
+  padding: 16px;
+}
+.input-sec {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 5px solid #000000;
+  border-radius: 15px;
+  background: white;
+}
+
+.input-sec>h2 {
+  text-align: center;
+  color: black;
+  margin-bottom: 20px;
+}
+
+.input-sec>form>.input {
+  margin: 8px 0;
+}
+
+.input-sec>form>button {
+  background-color: #000000;
+  color: white;
+  border: 0;
+  border-radius: 5px;
+  display: block;
+  width: 100%;
+  padding: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.input-sec>form>#editBuku,
+.input-sec>form>#submitBuku {
+  background: #181918;
+  color: #fff;
+  padding: 8px;
+  width: 75%;
+  text-align: center; 
+  border-radius: 30px;
+  cursor: pointer;
+  margin: auto;
+}
+
+.input-sec>form>#editBuku:active,
+.input-sec>form>#submitBuku:active {
+  background-color: #161717;
+}
+
+.input-sec>form>#editBuku {
+  display: none;
+}
+
+.input-sec>form>.input>input {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border-radius: 65px;
+  margin: 10px 0;
+}
+
+.input-sec>form>.input>label {
+  color: #141614;
+  font-weight: bold;
+}
+
+.input-sec>form>.input_inline {
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+}
+
+.input-sec>form>.input_inline>label {
+  color: #041201;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.search_section {
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  border: 5px solid #0b1109;
+  border-radius: 15px;
+  background: #fff;
+}
+
+.footer {
+  display: flex;
+  background-color: black;
+  height: 80px;
+  color: white;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
